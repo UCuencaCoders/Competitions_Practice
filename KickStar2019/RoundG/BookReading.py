@@ -1,9 +1,6 @@
 # Ejercicio 1 de la ronda G de KickStar 2019, 10pts, 15pts.
 
 # Obtenemos el numero de casos de prueba
-from asyncore import read
-
-
 test_cases  =  int ( input ())
 
 for case in range(test_cases):
