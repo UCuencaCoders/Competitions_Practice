@@ -25,19 +25,41 @@ pos_restore = 1
 #Realizamos los cambios para encontrar el valor 1 en el indice K solo en el valor de 1
 for discard in range(M):
     
-    used_indices = {} # Diccionario que guarda los indices usados en cada iteracion
+    advance = 0
+    dis_restore_1 = M_list[discard*2]
+    dis_restore_2 = M_list[(discard*2)+1]
+    
+    M_list[discard*2], M_list[(discard*2)+1] = 0, 0
     
     #bucle de cambio de posicion de 1 en N_list, sin saber la cantidad de cambios
     while True:
-        if discard != 0:
-            pass
         
-        prox_pos = M_list.index(pos_original) # Buscamos la posicion de 1 en N_list
+        try:
+            prox_pos = M_list.index(pos_original, advance) # Buscamos la posicion de 1 en N_list, y su uso
         
-        if prox_pos % 2 != 0: prox_pos -= 1 # Si la posicion es impar, se resta 1 para obtener la posicion de la tupla
-        prox_pos /= 2
-        prox_pos += 1
-        # asi obtenemos la posicion de la tupla en M_list
+            #- Realizamos el proximos swap
         
-        if prox_pos != discard:
-            pass
+            if prox_pos % 2 == 0: # Si la posicion de 1 en M_list es par
+                pos_original = M_list[prox_pos+1]
+            else:
+                pos_original = M_list[prox_pos-1]
+            
+            # Cambiamos el avance a la nueva posicion del index de 1 en M_list
+            if prox_pos % 2 == 0:
+                advance = prox_pos+2
+            else:
+                advance = prox_pos+1
+        
+        except ValueError:
+            break # Si no hay mas cambios, final de la iteracion del descarte
+    
+    if pos_original == K:
+        print(discard+1)
+        break
+    
+    pos_original = pos_restore
+    
+    M_list[discard*2] = dis_restore_1
+    M_list[(discard*2)+1] = dis_restore_2
+
+# Funcionando correctamente en CSAcademy, puntaje 60/100, buena mejor, pero falla en 4 por tiempo
