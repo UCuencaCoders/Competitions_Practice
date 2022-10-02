@@ -25,11 +25,14 @@ pos_restore = 1
 #Realizamos los cambios para encontrar el valor 1 en el indice K solo en el valor de 1
 for discard in range(M):
     
-    advance = 0
     dis_restore_1 = M_list[discard*2]
     dis_restore_2 = M_list[(discard*2)+1]
-    
     M_list[discard*2], M_list[(discard*2)+1] = 0, 0
+    
+    if discard == 0:
+        advance = 0
+    else:
+        advance = (discard - 1) * 2
     
     #bucle de cambio de posicion de 1 en N_list, sin saber la cantidad de cambios
     while True:
@@ -49,6 +52,9 @@ for discard in range(M):
                 advance = prox_pos+2
             else:
                 advance = prox_pos+1
+            
+            if advance <= discard*2:
+                pos_restore = pos_original
         
         except ValueError:
             break # Si no hay mas cambios, final de la iteracion del descarte
